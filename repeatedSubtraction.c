@@ -26,6 +26,7 @@ int greatestCommonDivisor(int m, int n) {
         iterations++;
     }
     printf("\nTo find the greatest common divisor, %d iterations occurred.\n", iterations + 1);
+    printf("\nhi\n");
     return m;
 }
 
