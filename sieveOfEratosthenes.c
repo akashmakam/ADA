@@ -1,4 +1,4 @@
-// Generation of prime numbers from 2 to 'n' using the Sieve of Eratosthenes Algorithm.
+// Generation of prime numbers from 2 to 'n' using the Sieve of Eratosthenes algorithm.
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -27,7 +27,6 @@ void sieveOfEratosthenes(int n) {
             printf("%d\t", array[i]);
     }
     printf("\n");
-
     free(array);
 }
 
