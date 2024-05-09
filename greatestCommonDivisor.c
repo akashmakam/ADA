@@ -1,6 +1,6 @@
 /*
 Program to find the greatest common divisor using different algorithms such as
-Euclid's, Consecutive Integer Checking, Repeated Subtraction and Middle School Method algorithms.
+Euclid's, Consecutive Integer Checking, Repeated Subtraction and Middle School Procedure algorithms.
 */
 
 #include <stdio.h>
