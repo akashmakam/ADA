@@ -138,17 +138,17 @@ int greatestCommonDivisor(list *list) {
 // Function to find the common prime factors between two lists of prime factors
 list *findCommonPrimeFactors(list *list1, list *list2) {
     list *commonFactorsList = createList();
-    node *current1 = list1->head;
-    node *current2 = list2->head;
+    node *current1 = list1 -> head;
+    node *current2 = list2 -> head;
     while (current1 != NULL && current2 != NULL) {
-        if (current1->data == current2->data) {
-            insertAtEnd(commonFactorsList, current1->data);
-            current1 = current1->next;
-            current2 = current2->next;
-        } else if (current1->data < current2->data) {
-            current1 = current1->next;
+        if (current1 -> data == current2 -> data) {
+            insertAtEnd(commonFactorsList, current1 -> data);
+            current1 = current1 -> next;
+            current2 = current2 -> next;
+        } else if (current1 -> data < current2 -> data) {
+            current1 = current1 -> next;
         } else {
-            current2 = current2->next;
+            current2 = current2 -> next;
         }
     }
     return commonFactorsList;
