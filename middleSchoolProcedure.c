@@ -1,19 +1,23 @@
 // GCD of two non-negative integers using the Sieve of Eratosthenes algorithm and Middle School Procedure algorithm.
 
+// Include necessary header files
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 
+// Define node structure for linked list
 typedef struct node {
     int data;
     struct node *next;
 } node;
 
+// Define structure for list
 typedef struct list {
     int size;
     node *head;
 } list;
 
+// Function to create an empty list
 list *createList() {
     list *newList = (list *) malloc(sizeof(list));
     if (newList == NULL) {
@@ -25,6 +29,7 @@ list *createList() {
     return newList;
 }
 
+// Function to create a new node with given data
 node *createNode(int data) {
     node *newNode = (node *) malloc(sizeof(node));
     if (newNode == NULL) {
@@ -36,6 +41,7 @@ node *createNode(int data) {
     return newNode;
 }
 
+// Function to insert a new node at the end of the list
 void insertAtEnd(list *list, int data) {
     node *newNode = createNode(data);
     if (list -> size == 0 || list -> head == NULL) {
@@ -50,6 +56,7 @@ void insertAtEnd(list *list, int data) {
     (list -> size)++;
 }
 
+// Function to display the elements of the list
 void display(list *list) {
     if (list -> head == NULL) {
         printf("\nThe list is empty, cannot display the list!\n");
@@ -63,6 +70,7 @@ void display(list *list) {
     printf("\n");
 }
 
+// Function to free the memory allocated to the list
 void freeList(list *list) {
     if (list -> head != NULL) {
         node *current = list -> head, *nextNode;
@@ -101,10 +109,11 @@ list *sieveOfEratosthenes(int n) {
     return list;
 }
 
+// Function to perform prime factorization of a number using the provided prime number list
 list *primeFactorization(int num, list *primeNumberList) {
     node *current = primeNumberList -> head;
     list *primeFactorsList = createList();
-    while (current -> next != NULL || num != 1) {
+    while (current != NULL && num != 1) {
         if (num % (current -> data) == 0) {
             num /= (current -> data);
             insertAtEnd(primeFactorsList, current -> data);
@@ -115,6 +124,7 @@ list *primeFactorization(int num, list *primeNumberList) {
     return primeFactorsList;
 }
 
+// Function to calculate the greatest common divisor (GCD) of a list of prime factors
 int greatestCommonDivisor(list *list) {
     int HCF = 1;
     node *current = list -> head;
@@ -125,6 +135,7 @@ int greatestCommonDivisor(list *list) {
     return HCF;
 }
 
+// Function to find the common prime factors between two lists of prime factors
 list *findCommonPrimeFactors(list *list1, list *list2) {
     list *commonFactorsList = createList();
     node *current1 = list1->head;
@@ -147,24 +158,36 @@ list *findCommonPrimeFactors(list *list1, list *list2) {
 int main() {
     int m, n, HCF;
     list *mList, *nList, *commonFactorsList;
+    // Input first number
     printf("\nEnter a number: ");
     scanf("%d", &m);
+    // Validate input
     while(m < 2) {
         printf("\nInvalid range! Enter a number greater than or equal to 2: ");
         scanf("%d", &m);
     }
-    printf("\nEnter another number: ");
+    // Input second number
+    printf("Enter another number: ");
     scanf("%d", &n);
+    // Validate input
     while(n < 2) {
         printf("\nInvalid range! Enter a number greater than or equal to 2: ");
         scanf("%d", &n);
     }
+    // Generate lists of prime factors for both numbers
     mList = sieveOfEratosthenes(m);
     nList = sieveOfEratosthenes(n);
     mList = primeFactorization(m, mList);
     nList = primeFactorization(n, nList);
+    // Find common prime factors between the two lists
     commonFactorsList = findCommonPrimeFactors(mList, nList);
+    // Calculate greatest common divisor (GCD) using the common prime factors
     HCF = greatestCommonDivisor(commonFactorsList);
+    // Output the result
     printf("\nThe greatest common divisor of %d and %d is %d.\n", m, n, HCF);
+    // Free memory allocated for lists
+    freeList(mList);
+    freeList(nList);
+    freeList(commonFactorsList);
     return 0;
 }
