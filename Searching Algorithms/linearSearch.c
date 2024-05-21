@@ -25,6 +25,7 @@ int linearSearch(int *array, int n, int key) {
     return -1;
 }
 
+// Driver Code
 int main() {
     int n, key, position;
     printf("\nEnter the size of the array: ");

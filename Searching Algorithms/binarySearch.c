@@ -50,6 +50,7 @@ int binarySearch(int *array, int n, int key, int start, int end) {
         return binarySearch(array, n, key, start, mid - 1);
 }
 
+// Driver Code
 int main() {
     int n, key, position;
     printf("\nEnter the size of the array: ");
