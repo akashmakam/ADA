@@ -16,7 +16,7 @@ int greatestCommonDivisor(int m, int n, int t) {
 
 // Iterative approach
 int greatestCommonDivisor(int m, int n, int t) {
-    int iterations = 0;
+    int iterations = 1;
     while (t > 0) {
         if (m % t == 0 && n % t == 0) {
             printf("\nTo find the greatest common divisor, %d iterations occurred.", iterations);

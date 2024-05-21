@@ -20,8 +20,9 @@ void euclids(int m, int n) {
 }
 
 // Function to find the greatest common divisor of two non-negative integers using Consecutive Integer Checking algorithm.
-void consecutiveIntegerChecking(int m, int n, int t) {
+void consecutiveIntegerChecking(int m, int n) {
     int iterations = 0;
+    int t = (m > n)? n : m;
     while (t > 0) {
         if (m % t == 0 && n % t == 0) {
             break;
@@ -50,17 +51,37 @@ void repeatedSubtraction(int m, int n) {
 
 // Driver code
 int main() {
-    int t, m, n;
+    int m, n, option;
     printf("\nEnter a number: ");
     scanf("%d", &m);
     printf("Enter another number: ");
     scanf("%d", &n);
-    t = (m > n)? n : m;
-    if (m > n)
-        euclids(m, n);
-    else
-        euclids(n, m);
-    consecutiveIntegerChecking(m, n, t);
-    repeatedSubtraction(m, n);
+    do {
+        printf("\nCalculate GCD:\n"
+        "1. Euclid's Algorithm\n"
+        "2. Consecutive Integer Checking\n"
+        "3. Modified Euclid's Algorithm\n"
+        "4. Exit\n");
+        scanf("%d", &option);
+        switch(option) {
+            case 1:
+                if (m > n)
+                    euclids(m, n);
+                else
+                    euclids(n, m);
+                break;
+            case 2:
+                consecutiveIntegerChecking(m, n);
+                break;
+            case 3:
+                repeatedSubtraction(m, n);
+                break;
+            case 4:
+                return 0;
+                break;
+            default:
+                printf("\nInvalid option!\n");
+        }
+    } while (option != 4);
     return 0;
 }
