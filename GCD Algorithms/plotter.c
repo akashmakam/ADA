@@ -1,3 +1,5 @@
+// Plotter code
+
 #include <stdio.h>
 #include <stdlib.h>
 #define x 10
