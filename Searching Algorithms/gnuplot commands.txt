@@ -1,0 +1,18 @@
+For Linear Search
+set title "Linear Search - Performance Evaluation"
+set xlabel "Input Size"
+set ylabel "Operation Count"
+set xrange [0:1100]
+set yrange [0:25]
+set style data linespoints
+plot 'linearbest.txt' title "Best Case", 'linearworst.txt' title "Worst Case", 'linearavg.txt' title "Average Case"
+
+
+For Binary Search
+set title "Binary Search - Performance Evaluation"
+set xlabel "Input Size"
+set ylabel "Operation Count"
+set xrange [0:1100]
+set yrange [0:25]
+set style data linespoints
+plot 'binarybest.txt' title "Best Case", 'binaryworst.txt' title "Worst Case", 'binaryavg.txt' title "Average Case"
