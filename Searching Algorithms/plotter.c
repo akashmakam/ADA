@@ -11,7 +11,7 @@ int count = 0;
 int linearSearch(int *array, int n, int key) {
     for (int i = 0; i < n; i++) {
         if (array[i] == key)
-            return i + 1;
+            return i+1;
     }
     return n;
 }
@@ -54,7 +54,7 @@ void linearSearchPlotter() {
         // Average case: key is a random element
         for (int i = 0; i < n; i++)
             arr[i] = rand() % n; // Fills the array with random numbers
-        key = rand() % n; // Generates a random key to be searched
+        key = arr[n/2]; // Generates a random key to be searched
         r = linearSearch(arr, n, key); // Performs linear search on the array with a random key
         fprintf(f2, "%d\t%d\n", n, r); // Appends the position of the found key into the file
 
@@ -99,7 +99,7 @@ void binarySearchPlotter() {
         // Average case: key is a random element
         for (int i = 0; i < n; i++)
             arr[i] = i;
-        key = rand() % n;
+        key = arr[n/2];
         count = 0;
         r = binarySearch(arr, n, key, 0, n - 1);
         fprintf(f2, "%d\t%d\n", n, count);
