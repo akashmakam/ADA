@@ -53,9 +53,9 @@ void plotter() {
     srand(time(NULL));
     int *array, n = 10, count;
     FILE *f1, *f2, *f3;
-    f1 = fopen("bubbleBest.txt", "a");
-    f2 = fopen("bubbleWorst.txt", "a");
-    f3 = fopen("bubbleAverage.txt", "a");
+    f1 = fopen("bubbleBest.txt", "w");
+    f2 = fopen("bubbleWorst.txt", "w");
+    f3 = fopen("bubbleAverage.txt", "w");
     while (n <= 30000) {
         array = (int *)malloc(n * sizeof(int));
 
@@ -86,11 +86,24 @@ void plotter() {
     fclose(f1);
     fclose(f2);
     fclose(f3);
+    printf("\nGNU plot file contents ready!\n");
 }
 
 // Driver Code
 int main() {
-    tester();
-    plotter();
+    int option;
+    do {
+        printf("\nChoose any one of the following:\n"
+        "1. Tester\n"
+        "2. Plotter\n"
+        "3. Exit\n");
+        scanf("%d", &option);
+        switch(option) {
+            case 1: tester(); break;
+            case 2: plotter(); break;
+            case 3: return 0;
+            default: printf("Invalid option!\n");
+        }
+    } while (option != 3);
     return 0;
 }
