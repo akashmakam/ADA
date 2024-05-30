@@ -1,0 +1,26 @@
+For Bubble sort
+set title "Bubble Sort Algorithm - Performance Evaluation"
+set xlabel "Input Size"
+set ylabel "Operation Count"
+set xrange [10:35000]
+set yrange [10:1000000000]
+set style data linespoints
+plot 'bubbleBest.txt' title "Best Case", 'bubbleWorst.txt' title "Worst Case", 'bubbleAverage.txt' title "Average Case"
+
+For Insertion sort
+set title "Insertion Sort Algorithm - Performance Evaluation"
+set xlabel "Input Size"
+set ylabel "Operation Count"
+set xrange [10:30000]
+set yrange [10:1000000000]
+set style data linespoints
+plot 'insertionBest.txt' title "Best Case", 'insertionWorst.txt' title "Worst Case", 'insertionAverage.txt' title "Average Case"
+
+For Selection sort
+set title "Selection Sort Algorithm - Performance Evaluation"
+set xlabel "Input Size"
+set ylabel "Operation Count"
+set xrange [10:35000]
+set yrange [10:1000000000]
+set style data linespoints
+plot 'selectionAverage.txt' title "Average Case"
