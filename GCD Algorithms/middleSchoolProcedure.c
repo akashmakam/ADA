@@ -64,7 +64,10 @@ void display(list *list) {
     }
     node *current = list -> head;
     while (current != NULL) {
-        printf("%d\t", current -> data);
+        if (current -> next != NULL)
+            printf("%d, ", current -> data);
+        else
+            printf("%d.", current -> data);
         current = current -> next;
     }
     printf("\n");
@@ -176,11 +179,21 @@ int main() {
     }
     // Generate lists of prime factors for both numbers
     mList = sieveOfEratosthenes(m);
+    printf("\nPrime numbers from 2 to %d are:\n", m);
+    display(mList);
     nList = sieveOfEratosthenes(n);
+    printf("\nPrime numbers from 2 to %d are:\n", n);
+    display(nList);
     mList = primeFactorization(m, mList);
+    printf("\nPrime factors of %d are:\n", m);
+    display(mList);
     nList = primeFactorization(n, nList);
+    printf("\nPrime factors of %d are:\n", n);
+    display(nList);
     // Find common prime factors between the two lists
     commonFactorsList = findCommonPrimeFactors(mList, nList);
+    printf("\nThe common factors of the input numbers are:\n");
+    display(commonFactorsList);
     // Calculate greatest common divisor (GCD) using the common prime factors
     HCF = greatestCommonDivisor(commonFactorsList);
     // Output the result
