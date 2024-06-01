@@ -177,13 +177,14 @@ int main() {
         printf("\nInvalid range! Enter a number greater than or equal to 2: ");
         scanf("%d", &n);
     }
-    // Generate lists of prime factors for both numbers
+    // Generates prime numbers in range for both numbers
     mList = sieveOfEratosthenes(m);
     printf("\nPrime numbers from 2 to %d are:\n", m);
     display(mList);
     nList = sieveOfEratosthenes(n);
     printf("\nPrime numbers from 2 to %d are:\n", n);
     display(nList);
+    // Find prime factors for both numbers
     mList = primeFactorization(m, mList);
     printf("\nPrime factors of %d are:\n", m);
     display(mList);
