@@ -24,3 +24,12 @@ set xrange [10:35000]
 set yrange [10:1000000000]
 set style data linespoints
 plot 'selectionAverage.txt' title "Average Case"
+
+For Merge sort
+set title "Merge Sort Algorithm - Performance Evaluation"
+set xlabel "Input Size"
+set ylabel "Operation Count"
+set xrange [0:1024]
+set yrange [0:10000]
+set style data linespoints
+plot 'mergeBest.txt' title "Best Case", 'mergeWorst.txt' title "Worst Case", 'mergeAverage.txt' title "Average Case"

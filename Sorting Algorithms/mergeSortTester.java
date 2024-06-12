@@ -1,7 +1,7 @@
 import java.util.*;
 
-class tester {
-    int count = 0;
+class mergeSortTester {
+    int count;
     int[] read() {
         Scanner in = new Scanner(System.in);
         System.out.print("\nEnter the size of the array: ");
@@ -21,6 +21,7 @@ class tester {
     }
 
     void merge(int[] leftArray, int[] rightArray, int[] array) {
+        count = 0;
         int leftSize = leftArray.length;
         int rightSize = rightArray.length;
 
@@ -69,14 +70,11 @@ class tester {
             merge(leftArray, rightArray, array);
         }
     }
-}
-
-class mergeSortTester {
     public static void main(String[] args) {
-        tester A = new tester();
+        mergeSortTester A = new mergeSortTester();
         int[] array = A.read();
         A.mergeSort(array);
         A.display(array);
-        System.out.println("\n" + A.count);
+        System.out.println("\nThis took " + A.count + " comparisions.");
     }
 }

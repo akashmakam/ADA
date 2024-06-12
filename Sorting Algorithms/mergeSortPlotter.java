@@ -2,16 +2,8 @@ import java.util.*;
 import java.io.FileWriter;
 import java.io.IOException;
 
-class plotter {
-    int count = 0;
-
-    void display(int[] array) {
-        int arrayLength = array.length;
-        System.out.println("\nThe sorted array is:");
-        for (int i = 0; i < arrayLength; i++)
-            System.out.print(array[i] + "\t");
-    }
-
+class mergeSortPlotter {
+    int count;
     void merge(int[] leftArray, int[] rightArray, int[] array) {
         int leftSize = leftArray.length;
         int rightSize = rightArray.length;
@@ -61,13 +53,33 @@ class plotter {
             merge(leftArray, rightArray, array);
         }
     }
-}
 
-class mergeSortPlotter {
+    void worstCaseArrayGenerator(int[] array) {
+        int arrayLength = array.length;
+        if (arrayLength <= 1)
+            return;
+        else {
+            int middle = arrayLength/2;
+            int[] leftArray = new int[middle];
+            int[] rightArray = new int[arrayLength - middle];
+
+            for (int i = 0; i < middle; i++)
+                    leftArray[i] = array[2*i];
+            for (int j = 0; j < (arrayLength - middle); j++)
+                    rightArray[j] = array[(2*j)+1];
+
+            worstCaseArrayGenerator(leftArray);
+            worstCaseArrayGenerator(rightArray);
+   
+            int i;
+            for (i = 0; i < middle; i++)
+                array[i] = leftArray[i];
+            for (int j = 0; j < (arrayLength - middle); j++)
+                array[j + i] = rightArray[j];
+        }
+    }
     public static void main(String[] args) {
-        plotter B = new plotter();
-        plotter W = new plotter();
-        plotter A = new plotter();
+        mergeSortPlotter A = new mergeSortPlotter();
         Random random = new Random();
         try {
             FileWriter bestCase = new FileWriter("mergeBest.txt");
@@ -75,25 +87,27 @@ class mergeSortPlotter {
             FileWriter averageCase = new FileWriter("mergeAverage.txt");
             for (int n = 2; n <= 1024; n = n * 2) {
                 int[] array = new int[n];
-                
+               
                 // Best case
+                A.count = 0;
                 for (int i = 0; i < n; i++)
                     array[i] = i+1;
-                B.mergeSort(array);
-                bestCase.write(n + "\t" + B.count + "\n");
+                A.mergeSort(array);
+                bestCase.write(n + "\t" + A.count + "\n");
 
                 // Worst case
-                for (int i = 0; i < n; i++)
-                    array[i] = n-i;
-                W.mergeSort(array);
-                worstCase.write(n + "\t" + W.count + "\n");
+                A.count = 0;
+                A.worstCaseArrayGenerator(array);
+                A.mergeSort(array);
+                worstCase.write(n + "\t" + A.count + "\n");
 
                 // Average case
+                A.count = 0;
                 for (int i = 0; i < n; i++)
                     array[i] = random.nextInt(1024);
                 A.mergeSort(array);
                 averageCase.write(n + "\t" + A.count + "\n");
-                
+               
             }
             bestCase.close();
             worstCase.close();
