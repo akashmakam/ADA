@@ -53,7 +53,7 @@ class mergeSortPlotter {
             merge(leftArray, rightArray, array);
         }
     }
-
+    
     void worstCaseArrayGenerator(int[] array) {
         int arrayLength = array.length;
         if (arrayLength <= 1)
@@ -86,7 +86,7 @@ class mergeSortPlotter {
             FileWriter worstCase = new FileWriter("mergeWorst.txt");
             FileWriter averageCase = new FileWriter("mergeAverage.txt");
             for (int n = 2; n <= 1024; n = n * 2) {
-                int[] array = new int[n];
+                int[] array = new int[n]; 
                
                 // Best case
                 A.count = 0;

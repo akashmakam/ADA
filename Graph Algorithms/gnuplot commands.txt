@@ -1,0 +1,8 @@
+For Breadth First Search Algorithm
+set title "Breadth First Search Algorithm - Performance Evaluation"
+set xlabel "Graph Size"
+set ylabel "Operation Count"
+set xrange [*:*]
+set yrange [*:*]
+set style data linespoints
+plot 'bfsBest.txt' title "Best Case", 'bfsWorst.txt' title "Worst Case"
