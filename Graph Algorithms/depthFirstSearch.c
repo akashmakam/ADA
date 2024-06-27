@@ -1,4 +1,4 @@
-// Program to implement Breadth First Search Algorithm on undirected graphs.
+// Program to implement Depth First Search Algorithm on undirected graphs.
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,6 +11,7 @@ typedef struct node {
 
 typedef struct graph {
     int vertexCount;
+    int *parent;
     bool *visitedNodes;
     struct node **adjacencyLists;
 } graph;
@@ -27,9 +28,11 @@ graph *createGraph(int numberOfVertices) {
     newGraph -> vertexCount = numberOfVertices;
     newGraph -> visitedNodes = (bool *) malloc(numberOfVertices * sizeof(bool));
     newGraph -> adjacencyLists = (node **) malloc(numberOfVertices * sizeof(node *));
+    newGraph -> parent = (int *) malloc(newGraph -> vertexCount * sizeof(int));
     for (int i = 0; i < numberOfVertices; i++) {
         newGraph -> adjacencyLists[i] = NULL;
         newGraph -> visitedNodes[i] = false;
+        newGraph -> parent[i] = -1;
     }
     return newGraph;
 }
@@ -45,55 +48,35 @@ void freeGraph(graph *graph) {
         }
     }
     free(graph -> adjacencyLists);
+    free(graph -> parent);
     free(graph);
 }
 
-static int isCyclic = 0, count = 0, orderCount = 0;
+static bool isCyclic = false;
+static int count = 0, orderCount = 0;
 
-void breadthFirstSearch(graph *graph, int startingVertex, int mode) {
-    int *queue = (int *) malloc(graph -> vertexCount * sizeof(int));
-    int *parent = (int *) malloc(graph -> vertexCount * sizeof(int));
-    int front = -1, rear = -1;
+void depthFirstSearch(graph *graph, int currentVertex, int mode) {
+    struct node* adjacencyList = graph -> adjacencyLists[currentVertex];
+    struct node* current = adjacencyList;
 
-    if (mode == 0) {
-        isCyclic = count = orderCount = 0;
-    }
-
-    for (int i = 0; i < graph -> vertexCount; i++) {
-        graph -> visitedNodes[i] = false;
-        parent[i] = -1;
-    }
-
-    graph -> visitedNodes[startingVertex] = true;
-    queue[++rear] = startingVertex;
     count++;
+    graph -> visitedNodes[currentVertex] = true;
+    if (mode == 0)
+        printf(" -> %c", currentVertex + 65);
 
-    while (front != rear) {
-        int currentVertex = queue[++front];
-        if (mode == 0) {
-            printf(" -> %c", currentVertex + 65);
+    while (current != NULL) {
+        orderCount++;
+        int connectedVertex = current -> vertexName;
+        if (graph -> visitedNodes[connectedVertex] == false) {
+            graph -> parent[connectedVertex] = currentVertex;
+            depthFirstSearch(graph, connectedVertex, mode);
+        } else if (graph -> parent[currentVertex] != connectedVertex) {
+            isCyclic = true;
         }
-        node *current = graph -> adjacencyLists[currentVertex];
-
-        while (current != NULL) {
-            orderCount++;
-            int connectedVertex = current -> vertexName;
-
-            if (graph -> visitedNodes[connectedVertex] == false) {
-                graph -> visitedNodes[connectedVertex] = true;
-                parent[connectedVertex] = currentVertex;
-                queue[++rear] = connectedVertex;
-                count++;
-            } else if (parent[currentVertex] != connectedVertex) {
-                isCyclic = 1;
-            }
-
-            current = current -> next;
-        }
+        current = current -> next;
     }
 
-    free(queue);
-    free(parent);
+    orderCount++;
 }
 
 void tester() {
@@ -129,8 +112,8 @@ void tester() {
 
     printf("\nEnter the vertex from which the graph should be traversed from: ");
     scanf("%d", &startingVertex);
-    printf("\nThe breadth first search sequence is as follows:\n");
-    breadthFirstSearch(graph, startingVertex, 0);
+    printf("\nThe depth first search sequence is as follows:\n");
+    depthFirstSearch(graph, startingVertex, 0);
 
     if (isCyclic)
         printf("\n\nThe entered graph is cyclic!\n");
@@ -146,8 +129,8 @@ void tester() {
 }
 
 void plotter(int mode) {
-    FILE *f1 = fopen("bfsBest.txt", "a");
-    FILE *f2 = fopen("bfsWorst.txt", "a");
+    FILE *f1 = fopen("dfsBest.txt", "a");
+    FILE *f2 = fopen("dfsWorst.txt", "a");
 
     for (int i = 1; i <= 10; i++) {
         graph *graph = createGraph(i);
@@ -170,10 +153,10 @@ void plotter(int mode) {
                 }
             }
         }
-        orderCount = count = i;
-        breadthFirstSearch(graph, 0, 1);
+        orderCount = count = 0;
+        depthFirstSearch(graph, 0, 1);
 
-        if (mode == 1)
+        if (mode == 1)  
             fprintf(f1, "%d\t%d\n", i, orderCount);
         else if (mode == 0)
             fprintf(f2, "%d\t%d\n", i, orderCount);
@@ -187,7 +170,7 @@ int main() {
     int choice;
     printf("\nChoose any one of the following options:\n"
     "1. Tester\n"
-    "2. Plotter\n");
+    "2. Generate Performance Data\n");
     scanf("%d", &choice);
     switch(choice) {
         case 1: tester(); break;
