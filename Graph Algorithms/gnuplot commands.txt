@@ -15,3 +15,12 @@ set xrange [*:*]
 set yrange [*:*]
 set style data linespoints
 plot 'dfsBest.txt' title "Best Case", 'dfsWorst.txt' title "Worst Case"
+
+For Topological Sorting Algorithm
+set title "Topological Sorting - Performance Evaluation"
+set xlabel "Graph Size"
+set ylabel "Operation Count"
+set xrange [*:*]
+set yrange [*:*]
+set style data linespoints
+plot 'topoBest.txt' title "Best Case", 'topoWorst.txt' title "Worst Case"

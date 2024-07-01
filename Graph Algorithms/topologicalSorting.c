@@ -1,4 +1,4 @@
-// Program to implement Depth First Search Algorithm on undirected graphs.
+// Program to implement Topological Sorting using Depth First Search Algorithm on directed graphs.
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,7 +11,6 @@ typedef struct node {
 
 typedef struct graph {
     int vertexCount;
-    int *parent;
     bool *visitedNodes;
     struct node **adjacencyLists;
 } graph;
@@ -28,11 +27,9 @@ graph *createGraph(int numberOfVertices) {
     newGraph -> vertexCount = numberOfVertices;
     newGraph -> visitedNodes = (bool *) malloc(numberOfVertices * sizeof(bool));
     newGraph -> adjacencyLists = (node **) malloc(numberOfVertices * sizeof(node *));
-    newGraph -> parent = (int *) malloc(newGraph -> vertexCount * sizeof(int));
     for (int i = 0; i < numberOfVertices; i++) {
         newGraph -> adjacencyLists[i] = NULL;
         newGraph -> visitedNodes[i] = false;
-        newGraph -> parent[i] = -1;
     }
     return newGraph;
 }
@@ -48,43 +45,57 @@ void freeGraph(graph *graph) {
         }
     }
     free(graph -> adjacencyLists);
-    free(graph -> parent);
     free(graph);
 }
 
-static bool isCyclic = false;
 static int count = 0, orderCount = 0;
 
-void depthFirstSearch(graph *graph, int currentVertex, int mode) {
-    struct node* adjacencyList = graph -> adjacencyLists[currentVertex];
-    struct node* current = adjacencyList;
+void depthFirstSearch(graph *graph, int currentVertex, int *stack, int *stackIndex) {
+    graph -> visitedNodes[currentVertex] = true;
+    node *current = graph -> adjacencyLists[currentVertex];
 
     count++;
-    graph -> visitedNodes[currentVertex] = true;
-    if (mode == 0)
-        printf(" -> %c", currentVertex + 65);
 
     while (current != NULL) {
         orderCount++;
         int connectedVertex = current -> vertexName;
-        if (graph -> visitedNodes[connectedVertex] == false) {
-            graph -> parent[connectedVertex] = currentVertex;
-            depthFirstSearch(graph, connectedVertex, mode);
-        } else if (graph -> parent[currentVertex] != connectedVertex) {
-            isCyclic = true;
+        if (!graph -> visitedNodes[connectedVertex]) {
+            depthFirstSearch(graph, connectedVertex, stack, stackIndex);
         }
         current = current -> next;
     }
-    
     orderCount++;
+
+    stack[(*stackIndex)++] = currentVertex;
+}
+
+void topologicalSort(graph *graph, int mode) {
+    int *stack = (int *) malloc(graph -> vertexCount * sizeof(int));
+    int stackIndex = 0;
+
+    for (int i = 0; i < graph -> vertexCount; i++) {
+        if (!graph -> visitedNodes[i]) {
+            depthFirstSearch(graph, i, stack, &stackIndex);
+        }
+    }
+
+    if (mode == 0) {
+        printf("\nThe topological sort order is:\n");
+        for (int i = stackIndex - 1; i >= 0; i--) {
+            printf("%c ", stack[i] + 65);
+        }
+        printf("\n");
+    }
+
+    free(stack);
 }
 
 void tester() {
-    int numberOfVertices, key, startingVertex;
+    int numberOfVertices, key;
     printf("\nEnter the number of vertices: ");
     scanf("%d", &numberOfVertices);
     graph *graph = createGraph(numberOfVertices);
-    printf("\nEnter the adjacency list:");
+    printf("\nEnter the adjacency list:\n");
     for (int i = 0; i < graph -> vertexCount; i++) {
         printf("\nFor vertex %c - Enter '1' if the following vertices are adjacent to it:\n", i + 65);
         for (int j = 0; j < graph -> vertexCount; j++) {
@@ -114,27 +125,14 @@ void tester() {
         }
     }
 
-    printf("\nEnter the vertex from which the graph should be traversed from: ");
-    scanf("%d", &startingVertex);
-    printf("\nThe depth first search sequence is as follows:\n");
-    depthFirstSearch(graph, startingVertex, 0);
-
-    if (isCyclic)
-        printf("\n\nThe entered graph is cyclic!\n");
-    else
-        printf("\n\nThe entered graph is not cyclic!\n");
-
-    if (count == numberOfVertices)
-        printf("The entered graph is connected!\n");
-    else
-        printf("The entered graph is not connected!\n");
+    topologicalSort(graph, 0);
 
     freeGraph(graph);
 }
 
 void plotter(int mode) {
-    FILE *f1 = fopen("dfsBest.txt", "a");
-    FILE *f2 = fopen("dfsWorst.txt", "a");
+    FILE *f1 = fopen("topoBest.txt", "a");
+    FILE *f2 = fopen("topoWorst.txt", "a");
 
     for (int i = 1; i <= 10; i++) {
         graph *graph = createGraph(i);
@@ -158,7 +156,7 @@ void plotter(int mode) {
             }
         }
         orderCount = count = 0;
-        depthFirstSearch(graph, 0, 1);
+        topologicalSort(graph, 1);
 
         if (mode == 1)  
             fprintf(f1, "%d\t%d\n", i, orderCount);
