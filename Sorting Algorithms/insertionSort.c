@@ -21,6 +21,7 @@ void display(int *array, int n) {
 // Insertion sort function with comparison counting
 int insertionSort(int *array, int n) {
     int count = 0;
+    printf("\nSteps:\n");
     for (int i = 1; i < n; i++) {
         int key = array[i];
         int j = i - 1;
@@ -32,6 +33,8 @@ int insertionSort(int *array, int n) {
             } else {
                 break; // Break if the element is not greater than key
             }
+            printf("\n%d. ", count);
+            display(array,n);
         }
         array[j + 1] = key;
     }

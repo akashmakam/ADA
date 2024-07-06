@@ -19,6 +19,7 @@ void display(int *array, int n) {
 int bubbleSort(int *array, int n) {
     int count = 0, flag;
     for (int i = 0; i < n; i++) {
+        printf("\nPass %d:\n", i+1);
         flag = 0;
         for (int j = 0; j < n - 1 - i; j++) {
             count++;
@@ -28,7 +29,10 @@ int bubbleSort(int *array, int n) {
                 array[j + 1] = temp;
                 flag = 1;
             }
+            printf("%d: ", count);
+            display(array, n);
         }
+        printf("\n");
         if (flag == 0)
             break;
     }
@@ -43,6 +47,7 @@ void tester() {
     read(array, n);
     printf("\nThe elements of the array are:\n");
     display(array, n);
+    printf("\nSteps:\n");
     count = bubbleSort(array, n);
     printf("\nThe sorted elements of the array are:\n");
     display(array, n);

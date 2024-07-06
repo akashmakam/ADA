@@ -13,7 +13,23 @@ int greatestCommonDivisor(int m, int n, int t) {
     }
 }
 */
+#include <stdio.h>
 
+/*
+// Experimental approach
+int greatestCommonDivisor(int m, int n, int t) {
+    int remainder, greaterNumber;
+    if (!(m % t == 0 && n % t == 0)) {
+        greaterNumber = (m > n)? m : n;
+        remainder = greaterNumber % t;
+        return (t - remainder);
+    } else {
+        return t;
+    }
+}
+*/
+
+/*
 // Iterative approach
 int greatestCommonDivisor(int m, int n, int t) {
     int iterations = 1;
@@ -28,6 +44,7 @@ int greatestCommonDivisor(int m, int n, int t) {
     }
     return -1;
 }
+*/
 
 // Driver code
 int main() {
