@@ -1,12 +1,21 @@
 import java.util.*;
 
 class knapSack {
+    static void display(int[][] array, int noOfItems, int totalCapacity) {
+        System.out.print("\nThe knapsack table using dynamic programming is as follows:\n");
+        for (int i = 0; i <= noOfItems; i++) {
+            for (int w = 0; w <= totalCapacity; w++) {
+                System.out.print(array[i][w] + "\t");
+            }
+            System.out.println();
+        }
+    }
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         System.out.print("\nEnter the number of items in the knapsack problem: ");
         int noOfItems = in.nextInt();
-        System.out.print("Enter the total weight for the knapsack problem: ");
-        int maxWeight = in.nextInt();
+        System.out.print("Enter the total capacity of the knapsack problem: ");
+        int totalCapacity = in.nextInt();
         
         int[] weightOfItems = new int[noOfItems];
         int[] profitOfItems = new int[noOfItems];
@@ -26,28 +35,32 @@ class knapSack {
             System.out.println(i + 1 + "\t" + weightOfItems[i] + "\t" + profitOfItems[i]);
         }
 
-        int[][] knapSackArray = new int[noOfItems + 1][maxWeight + 1];
+        int[][] knapSackArray = new int[noOfItems + 1][totalCapacity + 1];
+
+        for (int i = 0; i < noOfItems; i++) {
+            knapSackArray[i][0] = 0;
+        }
+
+        for (int j = 0; j < totalCapacity; j++) {
+            knapSackArray[0][j] = 0;
+        }
+
+        System.out.println("\nSteps:");
 
         for (int i = 1; i <= noOfItems; i++) {
-            for (int w = 1; w <= maxWeight; w++) {
-                if (weightOfItems[i - 1] <= w) {
-                    knapSackArray[i][w] = Math.max(knapSackArray[i - 1][w],
-                            knapSackArray[i - 1][w - weightOfItems[i - 1]] + profitOfItems[i - 1]);
+            for (int j = 1; j <= totalCapacity; j++) {
+                if (weightOfItems[i - 1] <= j) {
+                    knapSackArray[i][j] = Math.max(knapSackArray[i - 1][j],
+                            knapSackArray[i - 1][j - weightOfItems[i - 1]] + profitOfItems[i - 1]);
                 } else {
-                    knapSackArray[i][w] = knapSackArray[i - 1][w];
+                    knapSackArray[i][j] = knapSackArray[i - 1][j];
                 }
             }
         }
 
-        System.out.print("\nThe knapsack table using dynamic programming is as follows:\n");
-        for (int i = 0; i <= noOfItems; i++) {
-            for (int w = 0; w <= maxWeight; w++) {
-                System.out.print(knapSackArray[i][w] + "\t");
-            }
-            System.out.println();
-        }
+        display(knapSackArray, noOfItems, totalCapacity);
         
-        System.out.println("\nMaximum profit is: " + knapSackArray[noOfItems][maxWeight]);
+        System.out.println("\nMaximum profit is: " + knapSackArray[noOfItems][totalCapacity]);
         in.close();
     }
 }

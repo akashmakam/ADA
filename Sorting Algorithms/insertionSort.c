@@ -20,25 +20,32 @@ void display(int *array, int n) {
 
 // Insertion sort function with comparison counting
 int insertionSort(int *array, int n) {
-    int count = 0;
+    int comparisonCount = 0;  // Initialize comparison counter
+
     printf("\nSteps:\n");
     for (int i = 1; i < n; i++) {
         int key = array[i];
         int j = i - 1;
-        while (j >= 0) {
-            count++; // Count each comparison in the while loop
-            if (array[j] > key) {
-                array[j + 1] = array[j];
-                j--;
-            } else {
-                break; // Break if the element is not greater than key
-            }
-            printf("\n%d. ", count);
-            display(array,n);
+
+        // Move elements of array[0..i-1], that are greater than key,
+        // to one position ahead of their current position
+        while (j >= 0 && array[j] > key) {
+            array[j + 1] = array[j];
+            j--;
+            comparisonCount++;
         }
-        array[j + 1] = key;
+        // If the while loop did not execute, we still need to count the comparison where array[j] <= key
+        if (j >= 0) {
+            comparisonCount++;
+        }
+
+        array[j + 1] = key;  // Place key at the correct position
+
+        // Print the current state of the array
+        printf("%d. ", comparisonCount);
+        display(array, n);
     }
-    return count;
+    return comparisonCount;  // Return total number of comparisons
 }
 
 void tester() {
