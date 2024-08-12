@@ -73,10 +73,10 @@ void tester() {
     } while (option != 4);
 }
 
-void analysis(int ch) {
+void plotter(int choice) {
     int m, n;
     int count, maxcount, mincount;
-    FILE *fp1, *fp2;
+    FILE *f1, *f2;
     for(int i = 10; i <= 100; i += 10) {
         maxcount = 0; mincount = 10000;
         for(int j = 2; j <= i; j++) {
@@ -84,15 +84,15 @@ void analysis(int ch) {
                 count=0;
                 m=j;
                 n=k;
-                switch(ch) {
+                switch(choice) {
                     case 1:
-                        count=euclids(m,n);
+                        count=euclids(m, n, 1);
                         break;
                     case 2:
-                        count=consecutiveIntegerChecking(m,n);
+                        count=consecutiveIntegerChecking(m, n, 1);
                         break;
                     case 3:
-                        count=modifiedEuclids(m,n);
+                        count=repeatedSubtraction(m, n, 1);
                         break;
                 }
                 if(count > maxcount)
@@ -101,29 +101,29 @@ void analysis(int ch) {
                     mincount = count;
             }
         }
-        switch(ch) {
+        switch(choice) {
             case 1:
-                fp2 = fopen("e_b.txt","a");
-                fp1=fopen("e_w.txt","a");
+                f1 = fopen("e_b.txt","a");
+                f2 = fopen("e_w.txt","a");
                 break;
             case 2:
-                fp2=fopen("c_b.txt","a");
-                fp1=fopen("c_w.txt","a");
+                f1 = fopen("c_b.txt","a");
+                f2 = fopen("c_w.txt","a");
                 break;
             case 3:
-                fp2=fopen("m_b.txt","a");
-                fp1=fopen("m_w.txt","a");
+                f1 = fopen("m_b.txt","a");
+                f2 = fopen("m_w.txt","a");
                 break;
         }
-        fprintf(fp2,"%d %.2f\n",i,mincount);
-        fclose(fp2);
-        fprintf(fp1,"%d %.2f\n",i,maxcount);
-        fclose(fp1);
+        fprintf(f1,"%d %d\n", i, mincount);
+        fclose(f1);
+        fprintf(f2,"%d %d\n", i, maxcount);
+        fclose(f2);
     }
 }
 
 int main() {
-    int option;
+    int option, choice;
     printf("\nChoose any one of the following:\n"
     "1. Tester\n"
     "2. Plotter\n"
@@ -131,7 +131,14 @@ int main() {
     scanf("%d", &option);
     switch(option) {
         case 1: tester(); break;
-        case 2: plotter(); break;
+        case 2:
+            printf("Select an algorithm:\n"
+            "1. Euclid's algorithm\n"
+            "2. Consecutive Integer Checking algorithm\n"
+            "3. Modified Euclid's algorithm\n");
+            scanf("%d", &choice);
+            plotter(choice); 
+            break;
         case 3: exit(0);
         default: printf("\nInvalid option!\n");
     }
