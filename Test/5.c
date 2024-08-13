@@ -37,10 +37,12 @@ void merge(int *leftArray, int leftSize, int *rightArray, int rightSize, int *ar
     }
 
     while (l < leftSize) {
+        count++;
         array[i++] = leftArray[l++];
     }
 
     while (r < rightSize) {
+        count++;
         array[i++] = rightArray[r++];
     }
 }
@@ -101,7 +103,6 @@ void mergeSort(int *array, int n) {
     }
 }
 
-
 void plotter() {
     srand(time(NULL));
     FILE *bestCase, *worstCase;
@@ -139,7 +140,6 @@ void tester() {
     display(array, n);
     printf("\nThis took %d comparisons.\n", count);
     free(array);
-    return 0;
 }
 
 int main() {

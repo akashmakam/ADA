@@ -4,11 +4,11 @@
 int euclids(int a, int b, int mode) {
     int m, n;
     if (a > b) {
-        a = m;
-        b = n;
+        m = a;
+        n = b;
     } else {
-        a = n;
-        b = m;
+        n = a;
+        m = b;
     }
     int count = 0, remainder;
     while (n != 0) {
