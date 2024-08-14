@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 int euclids(int m, int n, int mode) {
-    int a, b, count = 0;
+    int a, b, count = 1;
     if (m > n) {
         a = m;
         b = n;
@@ -19,7 +19,7 @@ int euclids(int m, int n, int mode) {
     if (mode == 0) {
         printf("\nThe GCD of the numbers %d and %d is %d!\n", m, n, a);
     }
-    return count + 1;
+    return count;
 }
 
 int consecutiveIntegerChecking(int m, int n, int mode) {
@@ -73,18 +73,18 @@ void plotter(int choice) {
         maxcount = 0; mincount = 10000;
         for(int j = 2; j <= i; j++) {
             for(int k = 2; k <= i; k++) {
-                count=0;
-                m=j;
-                n=k;
+                count = 0;
+                m = j;
+                n = k;
                 switch(choice) {
                     case 1:
-                        count=euclids(m, n, 1);
+                        count = euclids(m, n, 1);
                         break;
                     case 2:
-                        count=consecutiveIntegerChecking(m, n, 1);
+                        count = consecutiveIntegerChecking(m, n, 1);
                         break;
                     case 3:
-                        count=repeatedSubtraction(m, n, 1);
+                        count = repeatedSubtraction(m, n, 1);
                         break;
                 }
                 if(count > maxcount)
@@ -115,24 +115,18 @@ void plotter(int choice) {
 }
 
 int main() {
-    int option, choice;
-    printf("\nChoose any one of the following:\n"
-    "1. Tester\n"
-    "2. Plotter\n"
-    "3. Exit\n");
-    scanf("%d", &option);
-    switch(option) {
-        printf("Select an algorithm:\n"
-            "1. Euclid's algorithm\n"
-            "2. Consecutive Integer Checking algorithm\n"
-            "3. Modified Euclid's algorithm\n");
-            scanf("%d", &choice);
-            switch (choice) {
-                case 1: tester(choice); break;
-                case 2: plotter(choice); break;
-                case 3: exit(0);
-                default: printf("\nInvalid option!\n");
-            }
-    }
+    int choice;
+    printf("Select an algorithm:\n"
+        "1. Euclid's algorithm\n"
+        "2. Consecutive Integer Checking algorithm\n"
+        "3. Modified Euclid's algorithm\n");
+        scanf("%d", &choice);
+        switch (choice) {
+            case 1: tester(choice); plotter(choice); break;
+            case 2: tester(choice); plotter(choice); break;
+            case 3: tester(choice); plotter(choice); break;
+            case 4: exit(0); break;
+            default: printf("\nInvalid option!\n");
+        }
     return 0;
 }
