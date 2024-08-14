@@ -1,36 +1,35 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int euclids(int a, int b, int mode) {
-    int m, n;
-    if (a > b) {
-        m = a;
-        n = b;
+int euclids(int m, int n, int mode) {
+    int a, b, count = 0;
+    if (m > n) {
+        a = m;
+        b = n;
     } else {
-        n = a;
-        m = b;
+        a = n;
+        b = m;
     }
-    int count = 0, remainder;
-    while (n != 0) {
-        remainder = m%n;
-        m = n;
-        n = remainder;
+    while (b != 0) {
+        int remainder = a%b;
+        a = b;
+        b = remainder;
         count++;
     }
-    if (mode == 0)
-        printf("The GCD of %d and %d using Euclid's algorithm is %d.\nThis took %d passes.\n", a, b, m, count);
-    return count;
+    if (mode == 0) {
+        printf("\nThe GCD of the numbers %d and %d is %d!\n", m, n, a);
+    }
+    return count + 1;
 }
 
 int consecutiveIntegerChecking(int m, int n, int mode) {
-    int t;
+    int t, count = 0, a = m, b = n;
     t = (m > n)? n : m;
-    int count = 1;
     while (t > 0) {
-        if (m % t == 0 && n % t == 0) {
+        if (m%t == 0 && n%t == 0) {
             if (mode == 0)
-                printf("The GCD of %d and %d using Consecutive Integer algorithm is %d.\nThis took %d passes.\n", m, n, t, count);
-            return t;
+                printf("\nThe GCD of the numbers %d and %d is %d!\n", a, b, t);
+            return count + 1;
         } else {
             t--;
             count++;
@@ -49,28 +48,21 @@ int repeatedSubtraction(int m, int n, int mode) {
         count++;
     }
     if (mode == 0)
-        printf("The GCD of %d and %d using Modified Euclid's algorithm is %d.\nThis took %d passes.\n", a, b, m, count);
-    return m;
+        printf("\nThe GCD of the numbers %d and %d is %d!\n", a, b, m);
+    return count + 1;
 }
 
-void tester() {
-    int m, n, option;
+void tester(int choice) {
+    int m, n;
     printf("\nEnter any two numbers:\n");
     scanf("%d %d", &m, &n);
-    do {
-        printf("Select an algorithm:\n"
-        "1. Euclid's algorithm\n"
-        "2. Consecutive Integer Checking algorithm\n"
-        "3. Modified Euclid's algorithm\n");
-        scanf("%d", &option);
-        switch(option) {
-            case 1: euclids(m, n, 0); break;
-            case 2: consecutiveIntegerChecking(m, n, 0); break;
-            case 3: repeatedSubtraction(m, n, 0); break;
-            case 4: return;
-            default: printf("\nInvalid option!\n");
-        }
-    } while (option != 4);
+    switch(choice) {
+        case 1: euclids(m, n, 0); break;
+        case 2: consecutiveIntegerChecking(m, n, 0); break;
+        case 3: repeatedSubtraction(m, n, 0); break;
+        case 4: return;
+        default: printf("\nInvalid option!\n");
+    }
 }
 
 void plotter(int choice) {
@@ -130,17 +122,17 @@ int main() {
     "3. Exit\n");
     scanf("%d", &option);
     switch(option) {
-        case 1: tester(); break;
-        case 2:
-            printf("Select an algorithm:\n"
+        printf("Select an algorithm:\n"
             "1. Euclid's algorithm\n"
             "2. Consecutive Integer Checking algorithm\n"
             "3. Modified Euclid's algorithm\n");
             scanf("%d", &choice);
-            plotter(choice); 
-            break;
-        case 3: exit(0);
-        default: printf("\nInvalid option!\n");
+            switch (choice) {
+                case 1: tester(choice); break;
+                case 2: plotter(choice); break;
+                case 3: exit(0);
+                default: printf("\nInvalid option!\n");
+            }
     }
     return 0;
 }
