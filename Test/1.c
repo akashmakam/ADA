@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 int euclids(int m, int n, int mode) {
-    int a, b, count = 1;
+    int a, b, count = 0;
     if (m > n) {
         a = m;
         b = n;

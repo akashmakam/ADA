@@ -37,12 +37,10 @@ void merge(int *leftArray, int leftSize, int *rightArray, int rightSize, int *ar
     }
 
     while (l < leftSize) {
-        count++;
         array[i++] = leftArray[l++];
     }
 
     while (r < rightSize) {
-        count++;
         array[i++] = rightArray[r++];
     }
 }
