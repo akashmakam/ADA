@@ -38,44 +38,35 @@ void plotter() {
     srand(time(NULL));
     int *array, n = 10, count;
     FILE *bubbleBest, *bubbleWorst, *bubbleAverage;
-
     bubbleBest = fopen("bubbleBest.txt", "w");
     bubbleWorst = fopen("bubbleWorst.txt", "w");
     bubbleAverage = fopen("bubbleAverage.txt", "w");
-
     while (n <= 30000) {
         array = (int *)malloc(n * sizeof(int));
-
         // Best case
         for (int i = 0; i < n; i++)
             array[i] = i + 1;
         count = bubbleSort(array, n);
         fprintf(bubbleBest, "%d\t%d\n", n, count);
-
         // Worst case
         for (int i = 0; i < n; i++)
             array[i] = n - i;
         count = bubbleSort(array, n);
         fprintf(bubbleWorst, "%d\t%d\n", n, count);
-
         // Average case
         for (int i = 0; i < n; i++)
             array[i] = rand() % n;
         count = bubbleSort(array, n);
         fprintf(bubbleAverage, "%d\t%d\n", n, count);
-
         if (n < 10000)
             n *= 10;
         else
             n += 10000;
-
         free(array);
     }
-
     fclose(bubbleBest);
     fclose(bubbleWorst);
     fclose(bubbleAverage);
-
     printf("\nGNU plot file contents ready for Bubble Sort!\n");
 }
 
